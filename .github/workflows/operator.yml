@@ -28,14 +28,6 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
-      
-      - name: Helm tool installer
-        uses: Azure/setup-helm@v3
-        with:
-          # Version of helm
-          version: latest
-          # GitHub token. Required only if 'version' == 'latest'
-          token: ${{ secrets.TOKEN }}
 
       - name: Kubectl tool installer
         uses: Azure/setup-kubectl@v4.0.0
@@ -44,6 +36,14 @@ jobs:
           version: latest
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG_FILE }}
+
+      - name: Helm tool installer
+        uses: Azure/setup-helm@v3
+        with:
+          # Version of helm
+          version: latest
+          # GitHub token. Required only if 'version' == 'latest'
+          token: ${{ secrets.TOKEN }}
           
       # Install the opentelemetry operator 
       - name: Install the OpenTelemetry Operator
