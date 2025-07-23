@@ -34,9 +34,7 @@ jobs:
         with:
           # Version of kubectl
           version: latest
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG_FILE }}
-
+        
       - name: Helm tool installer
         uses: Azure/setup-helm@v3
         with:
@@ -49,8 +47,7 @@ jobs:
       - name: Install the OpenTelemetry Operator
         run: |
           mkdir $HOME/.kube
-          echo $KUBECONFIG | base64 -d > $HOME/.kube/config
-          cat $HOME/.kube/config
+          echo "${{ secretes.KUBECONFIG_FILE }}" | base64 -d > $HOME/.kube/config
           helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
           helm install my-opentelemetry-operator open-telemetry/opentelemetry-operator \
               --set "manager.collectorImage.repository=otel/opentelemetry-collector-k8s" \
